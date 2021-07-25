@@ -40,6 +40,35 @@ export class Icns {
   }
 
   /**
+   * Create ICNS from the icon buffer(support browser)
+   * 
+   * example:
+   * ```js
+   * select.addEventListener('change', function(event) {
+   *     const reader = new FileReader();
+   *     reader.onload = function () {
+   *       const arrayBuffer = this.result
+   *       // window.icns.Icns
+   *       // TODO <img src="${ base64 }" />
+   *       window.wrap = icns.Icns.fromArrayBuffer(arrayBuffer)
+   *     }
+   *     reader.readAsArrayBuffer(this.files[0]);
+   *   })
+   * ```
+   */
+  static fromArrayBuffer(buffer: ArrayBuffer): Array<{ type: OSType, base64: string }> {
+    const deBuffer = Buffer.from(buffer)
+    const app = this.from(deBuffer)
+    return app.images.map(item=> {
+      const base64 = item.image.toString("base64")
+      return {
+        type: item.osType,
+        base64,
+      }
+    })
+  }
+
+  /**
    * Create ICNS from the icon buffer.
    * @param buffer The ICNS icon buffer.
    */

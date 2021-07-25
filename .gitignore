@@ -59,3 +59,7 @@ typings/
 
 # Transpiled files
 dist
+
+yarn.lock
+
+index.html
